@@ -8,7 +8,6 @@ import MailboxDetails from "./components/MailboxDetails";
 import MailboxList from "./components/MailboxList";
 import './App.css'
 
-
 const App = () => {
   return (
     <Router>
