@@ -10,7 +10,7 @@ const MailboxList = () => {
 
   return (
     <div>
-      <h1>Mailbox List</h1>
+      <h1>mailbox List</h1>
       <ul>
         {mailboxes.map((mailbox) => (
           <li key={mailbox.id}>
