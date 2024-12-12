@@ -1,48 +1,51 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const MailboxForm = () => {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const navigate = useNavigate();
+const initialState = {
+    boxSize: '',
+    boxholder: '',
+};
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    
+const MailboxForm = (props) => {
+    const navigate = useNavigate();
+    const [formData, setFormData] = useState(initialState);
 
-    console.log('New Mailbox Created:', { name, description });
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        props.addBox(formData);
+        setFormData(initialState);
+        navigate('/mailboxes');
+    };
+
+    const handleChange = ({ target }) => {
+        setFormData({ ...formData, [target.name]: target.value });
+    };
 
 
-    navigate('/');
-  };
-
-  return (
-    <div>
-      <h1>Create a New Mailbox</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="name">Mailbox Name:</label>
-          <input
-            type="text"
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="description">Description:</label>
-          <textarea
-            id="description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            required
-          ></textarea>
-        </div>
-        <button type="submit">Create Mailbox</button>
-      </form>
-    </div>
-  );
+    return (
+        <main>
+            <h1>New Mailbox</h1>
+            <form onSubmit={handleSubmit}>
+                <label htmlFor="boxSize">Box Size:</label>
+                <input
+                    type="number"
+                    id="boxSize"
+                    name="boxSize"
+                    value={formData.boxSize}
+                    onChange={handleChange}
+                />
+                <label htmlFor="boxholder">Boxholder:</label>
+                <input
+                    type="text"
+                    id="boxholder"
+                    name="boxholder"
+                    value={formData.boxholder}
+                    onChange={handleChange}
+                />
+                <button type="submit">Submit</button>
+            </form>
+        </main>
+    );
 };
 
 export default MailboxForm;
